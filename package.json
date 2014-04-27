@@ -1,6 +1,6 @@
 {
   "name": "wintersmith-pagedownextra",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "author": "torque",
   "description": "pagedown-extra plugin for wintersmith",
   "license": "MIT",
@@ -8,6 +8,7 @@
     "pagedown": "ujifgc/pagedown",
     "pagedown-extra": "jmcmanus/pagedown-extra",
     "async": ">=0.1.x",
-    "coffee-script": "1.2.x"
+    "coffee-script": "1.2.x",
+    "highlight.js": ">=8.0.0"
   }
 }

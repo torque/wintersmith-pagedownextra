@@ -1,9 +1,43 @@
 async = require 'async'
 pagedown = require 'pagedown'
 pagedownExtra = require('pagedown-extra').Extra
+hljs = require 'highlight.js'
 fs = require 'fs'
 path = require 'path'
 url = require 'url'
+
+# monkey patch in highlighting for fenced code blocks
+pagedownExtra.prototype.fencedCodeBlocks = (text) ->
+  encodeCode = (code) ->
+    code = code.replace /&/g, "&amp;"
+    code = code.replace /</g, "&lt;"
+    code = code.replace />/g, "&gt;"
+    # These were escaped by PageDown before postNormalization
+    code = code.replace /~D/g, "$$"
+    code = code.replace /~T/g, "~"
+    code;
+
+  text = text.replace(/(?:^|\n)```[ \t]*(\S*)[ \t]*\n([\s\S]*?)\n```[ \t]*(?=\n)/g, (match, m1, m2) =>
+    language = m1
+    codeblock = m2;
+
+    # adhere to specified options
+    preclass = ''
+    codeclass = ''
+    if language
+      preclass = ' class="language-' + language + ' hljs"'
+      codeclass = ' class="language-' + language + '"'
+      code = hljs.highlight(language, codeblock).value
+    else
+      code = encodeCode codeblock
+
+    html = ['<pre', preclass, '><code', codeclass, '>', code, '</code></pre>'].join('');
+
+    # replace codeblock with placeholder until postConversion step
+    @hashExtraBlock html
+  )
+
+  text
 
 pagedownRender = (page, callback) ->
   # convert the page
