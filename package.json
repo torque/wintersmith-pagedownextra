@@ -1,13 +1,12 @@
 {
-  "name": "wintersmith-showdown",
+  "name": "wintersmith-pagedownextra",
   "version": "0.1.0",
-  "author": "Luke Hagan <lukehagan.com>",
-  "description": "showdown plugin for wintersmith",
+  "author": "torque",
+  "description": "pagedown-extra plugin for wintersmith",
   "license": "MIT",
   "dependencies": {
-    "showdown": "git://github.com/lhagan/showdown.git#showdown-extended",
-    "highlight.js": ">=7.3.0",
-    "cheerio": ">=0.10.x",
+    "pagedown": "ujifgc/pagedown",
+    "pagedown-extra": "jmcmanus/pagedown-extra",
     "async": ">=0.1.x",
     "coffee-script": "1.2.x"
   }
