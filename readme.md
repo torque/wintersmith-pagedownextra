@@ -1,14 +1,14 @@
-# wintersmith-showdown
+# wintersmith-pagedownextra
 
-[Showdown](https://github.com/lhagan/showdown) plugin for [wintersmith](https://github.com/jnordberg/wintersmith). Renders Markdown content using (a modified version of) Showdown instead of the default, [marked](https://github.com/chjj/marked). While slower to render, this enables lots of Markdown extras such as footnotes, tables, strikethrough, LaTeX math (via [MathML](http://www.mathjax.com)), and smart punctuation. Also adds extremely inefficient code highlighting via `highlight.js`.
+[pagedown](https://code.google.com/p/pagedown/) with [extras](https://github.com/jmcmanus/pagedown-extra) plugin for [wintersmith](https://github.com/jnordberg/wintersmith). Desirable for gfm parity with editors such as [stackedit.io](https://stackedit.io/)
 
-This is a very rough, initial release. Use at your own risk! 
+I have done bad things.
 
 ### install:
 
-    npm install git://github.com/lhagan/wintersmith-showdown.git
-  
-then add `./node_modules/wintersmith-showdown/` to `config.json` like this:
+    npm install "torque/wintersmith-pagedownextra"
+
+then add `./node_modules/wintersmith-pagedownextra/` to `config.json` like this:
 
     {
       "locals": {
@@ -19,16 +19,8 @@ then add `./node_modules/wintersmith-showdown/` to `config.json` like this:
         "index_articles": 3
       },
       "plugins": [
-        "./node_modules/wintersmith-showdown/"
+        "./node_modules/wintersmith-pagedownextra/"
       ]
     }
 
-### per-page showdown extensions
-
-By default, all extensions are enabled. For more fine-grained control, include `showdownExtensions` in your page metadata. For example:
-
-    ---
-    title: Wintersmith Showdown
-    template: index.jade
-    showdownExtensions: ['github', 'smartypants']
-    ---
+### Per-page extensions: do not exist yet.
