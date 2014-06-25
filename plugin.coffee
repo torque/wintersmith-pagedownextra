@@ -37,12 +37,12 @@ pagedownExtra.prototype.fencedCodeBlocks = (text) ->
 
   text
 
-pagedownRender = (page, callback) ->
+pagedownRender = ( page, globalExtensions, callback ) ->
   # convert the page
-  # extensions = page.metadata.pagedownExtensions or ['github', 'table', 'math', 'smartypants', 'footnotes']
-  converter = new pagedown.Converter()
-  pagedownExtra.init(converter)
   page._htmlraw = converter.makeHtml(page.markdown)
+  extensions = page.metadata.pagedownExtensions or globalExtensions or "all"
+  converter = new pagedown.Converter( )
+  pagedownExtra.init converter, {extensions: extensions}
 
   callback null, page
 
