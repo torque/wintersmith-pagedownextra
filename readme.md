@@ -8,19 +8,9 @@ I have done bad things.
 
     npm install "torque/wintersmith-pagedownextra"
 
-then add `./node_modules/wintersmith-pagedownextra/` to `config.json` like this:
-
-    {
-      "locals": {
-        "url": "http://localhost:8080",
-        "name": "The Wintersmith's blog",
-        "owner": "The Wintersmith",
-        "description": "-32°C ain't no problems!",
-        "index_articles": 3
-      },
-      "plugins": [
-        "./node_modules/wintersmith-pagedownextra/"
-      ]
-    }
+then add `./node_modules/wintersmith-pagedownextra/` to your `config.json`
+    "plugins": [
+      "./node_modules/wintersmith-pagedownextra/"
+    ]
 
 ### Per-page extensions: do not exist yet.
