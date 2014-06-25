@@ -6,11 +6,16 @@ I have done bad things.
 
 ### install:
 
-    npm install "torque/wintersmith-pagedownextra"
+```
+npm install "torque/wintersmith-pagedownextra"
+```
 
 then add `./node_modules/wintersmith-pagedownextra/` to your `config.json`
-    "plugins": [
-      "./node_modules/wintersmith-pagedownextra/"
-    ]
 
-### Per-page extensions: do not exist yet.
+```
+"plugins": [
+  "./node_modules/wintersmith-pagedownextra/"
+]
+```
+
+### Per-page extensions: probably exist but I haven't tested yet.
