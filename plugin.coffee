@@ -16,7 +16,7 @@ pagedownExtra.prototype.fencedCodeBlocks = (text) ->
       .replace( />/g, "&gt;" )
       .replace( /~T/g, "~" )
 
-  text = text.replace(/(?:^|\n)```[ \t]*(\S*)[ \t]*\n([\s\S]*?)\n```[ \t]*(?=\n)/g, (match, m1, m2) =>
+  text = text.replace /(?:^|\n)```[ \t]*(\S*)[ \t]*\n([\s\S]*?)\n```[ \t]*(?=\n)/g, (match, m1, m2) =>
     language = m1
     codeblock = m2;
 
@@ -33,7 +33,6 @@ pagedownExtra.prototype.fencedCodeBlocks = (text) ->
 
     # replace codeblock with placeholder until postConversion step
     @hashExtraBlock html
-  )
 
   text
 
@@ -47,10 +46,9 @@ pagedownRender = ( page, globalExtensions, callback ) ->
   page._html = converter.makeHtml page.markdown
   callback null, page
 
-module.exports = (env, callback) ->
+module.exports = ( env, callback ) ->
 
-  class pagedownPage extends env.plugins.MarkdownPage
-
+  class PagedownPage extends env.plugins.MarkdownPage
 
     getIntro: (base=env.config.baseUrl) ->
       @_html = @getHtml(base)
@@ -75,22 +73,22 @@ module.exports = (env, callback) ->
     getHtml: ( base = env.config.baseUrl ) ->
       return @_html
 
-  pagedownPage.fromFile = (filepath, callback) ->
+  PagedownPage.fromFile = ( filepath, callback ) ->
     async.waterfall [
       (callback) ->
         fs.readFile filepath.full, callback
       (buffer, callback) ->
-        pagedownPage.extractMetadata buffer.toString(), callback
+        PagedownPage.extractMetadata buffer.toString(), callback
       (result, callback) =>
         {markdown, metadata} = result
         page = new this filepath, metadata, markdown
         callback null, page
       (page, callback) =>
-        pagedownRender page, callback
+        pagedownRender page, env.config.pagedownExtensions, callback
       (page, callback) =>
         callback null, page
     ], callback
 
-  env.registerContentPlugin 'pages', '**/*.*(markdown|mkd|md)', pagedownPage
+  env.registerContentPlugin 'pages', '**/*.*(markdown|mkd|md)', PagedownPage
 
-  callback()
+  callback( )
