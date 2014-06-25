@@ -39,32 +39,18 @@ pagedownExtra.prototype.fencedCodeBlocks = (text) ->
 
 pagedownRender = ( page, globalExtensions, callback ) ->
   # convert the page
-  page._htmlraw = converter.makeHtml(page.markdown)
   extensions = page.metadata.pagedownExtensions or globalExtensions or "all"
   converter = new pagedown.Converter( )
   pagedownExtra.init converter, {extensions: extensions}
 
+
+  page._html = converter.makeHtml page.markdown
   callback null, page
 
 module.exports = (env, callback) ->
 
   class pagedownPage extends env.plugins.MarkdownPage
 
-    getHtml: (base=env.config.baseUrl) ->
-      # TODO: cleaner way to achieve this?
-      # http://stackoverflow.com/a/4890350
-      name = @getFilename()
-      name = name[name.lastIndexOf('/')+1..]
-      loc = @getLocation(base)
-      fullName = if name is 'index.html' then loc else loc + name
-      # handle links to anchors within the page
-      @_html = @_htmlraw.replace(/(<(a|img)[^>]+(href|src)=")(#[^"]+)/g, '$1' + fullName + '$4')
-      # handle relative links
-      @_html = @_html.replace(/(<(a|img)[^>]+(href|src)=")(?!http|\/)([^"]+)/g, '$1' + loc + '$4')
-      # handles non-relative links within the site (e.g. /about)
-      if base
-        @_html = @_html.replace(/(<(a|img)[^>]+(href|src)=")\/([^"]+)/g, '$1' + base + '$4')
-      return @_html
 
     getIntro: (base=env.config.baseUrl) ->
       @_html = @getHtml(base)
@@ -86,6 +72,8 @@ module.exports = (env, callback) ->
       @_intro ?= @getIntro()
       @_hasMore ?= (@_html.length > @_intro.length)
       return @_hasMore
+    getHtml: ( base = env.config.baseUrl ) ->
+      return @_html
 
   pagedownPage.fromFile = (filepath, callback) ->
     async.waterfall [
