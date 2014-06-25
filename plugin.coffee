@@ -50,26 +50,6 @@ module.exports = ( env, callback ) ->
 
   class PagedownPage extends env.plugins.MarkdownPage
 
-    getIntro: (base=env.config.baseUrl) ->
-      @_html = @getHtml(base)
-      idx = ~@_html.indexOf('<span class="more') or ~@_html.indexOf('<h2') or ~@_html.indexOf('<hr')
-      # TODO: simplify!
-      if idx
-        @_intro = @_html.toString().substr 0, ~idx
-        hr_index = @_html.indexOf('<hr')
-        footnotes_index = @_html.indexOf('<div class="footnotes">')
-        # ignore hr if part of pagedown's footnote section
-        if hr_index && ~footnotes_index && !(hr_index < footnotes_index)
-          @_intro = @_html
-      else
-        @_intro = @_html
-      return @_intro
-
-    @property 'hasMore', ->
-      @_html ?= @getHtml()
-      @_intro ?= @getIntro()
-      @_hasMore ?= (@_html.length > @_intro.length)
-      return @_hasMore
     getHtml: ( base = env.config.baseUrl ) ->
       return @_html
 
