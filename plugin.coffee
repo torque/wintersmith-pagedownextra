@@ -11,21 +11,19 @@ pagedownExtra.prototype.fencedCodeBlocks = (text) ->
   encodeCode = (code) ->
     # These were escaped by PageDown before postNormalization
     code.replace( /~D/g, "$$" )
-      .replace( /&/g, "&amp;" )
-      .replace( /</g, "&lt;" )
-      .replace( />/g, "&gt;" )
       .replace( /~T/g, "~" )
 
   text = text.replace /(?:^|\n)```[ \t]*(\S*)[ \t]*\n([\s\S]*?)\n```[ \t]*(?=\n)/g, (match, m1, m2) =>
     language = m1
     codeblock = m2;
 
+    # adhere to specified options
     preclass = ''
     codeclass = ''
     if language
       preclass = ' class="language-' + language + ' hljs"'
       codeclass = ' class="language-' + language + '"'
-      code = hljs.highlight(language, encodeCode codeblock).value
+      code = hljs.highlight(language, codeblock).value
     else
       code = encodeCode codeblock
 
