@@ -8,7 +8,6 @@
     "pagedown": "ujifgc/pagedown",
     "pagedown-extra": "jmcmanus/pagedown-extra",
     "async": ">=0.1.x",
-    "coffee-script": "1.2.x",
     "highlight.js": ">=8.0.0"
   }
 }
