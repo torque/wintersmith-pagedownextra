@@ -140,9 +140,9 @@ d = (a) ->
 
 u = /(\$\$?|\\(?:begin|end)\{[a-z]*\*?\}|\\[\\{}$]|[{}]|(?:\n\s*)+|@@\d+@@)/i
 
-pagedownRender = ( page, globalExtensions, callback ) ->
+pagedownRender = ( page, globalOptions, callback ) ->
   # convert the page
-  extensions = page.metadata.pagedownExtensions or globalExtensions or "all"
+  extensions = page.metadata.pagedownextraExtensions or globalOptions.extensions or "all"
   converter = new pagedown.Converter( )
   pagedownExtra.init converter, {extensions: extensions}
 
@@ -178,7 +178,7 @@ module.exports = ( env, callback ) ->
         page = new this filepath, metadata, markdown
         callback null, page
       (page, callback) =>
-        pagedownRender page, env.config.pagedownExtensions, callback
+        pagedownRender page, env.config.pagedownextra, callback
       (page, callback) =>
         callback null, page
     ], callback
