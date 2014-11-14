@@ -142,7 +142,7 @@ u = /(\$\$?|\\(?:begin|end)\{[a-z]*\*?\}|\\[\\{}$]|[{}]|(?:\n\s*)+|@@\d+@@)/i
 
 pagedownRender = ( page, globalOptions, callback ) ->
   # convert the page
-  extensions = page.metadata.pagedownextraExtensions or globalOptions.extensions or "all"
+  extensions = page.metadata.pagedownextraExtensions or globalOptions and globalOptions.extensions or "all"
   converter = new pagedown.Converter( )
   pagedownExtra.init converter, {extensions: extensions}
 
