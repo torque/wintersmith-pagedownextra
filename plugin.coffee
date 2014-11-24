@@ -21,12 +21,11 @@ pagedownExtra.prototype.fencedCodeBlocks = (text) ->
     preclass = ''
     codeclass = ''
 
+    code = encodeCode codeblock
     if language and hljs.getLanguage language
       preclass = ' class="language-' + language + ' hljs"'
       codeclass = ' class="language-' + language + '"'
-      code = hljs.highlight(language, codeblock).value
-    else
-      code = encodeCode codeblock
+      code = hljs.highlight(language, code).value
 
     html = ['<pre', preclass, '><code', codeclass, '>', code, '</code></pre>'].join('');
 
