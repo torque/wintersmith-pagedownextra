@@ -20,7 +20,8 @@ pagedownExtra.prototype.fencedCodeBlocks = (text) ->
     # adhere to specified options
     preclass = ''
     codeclass = ''
-    if language
+
+    if language and hljs.getLanguage language
       preclass = ' class="language-' + language + ' hljs"'
       codeclass = ' class="language-' + language + '"'
       code = hljs.highlight(language, codeblock).value
