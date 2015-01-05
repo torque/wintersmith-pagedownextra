@@ -13,7 +13,7 @@ pagedownExtra.prototype.fencedCodeBlocks = (text) ->
     code.replace( /~D/g, "$$" )
       .replace( /~T/g, "~" )
 
-  text = text.replace /(?:^|\n)```[ \t]*(\S*)[ \t]*\n([\s\S]*?)\n```[ \t]*(?=\n)/g, (match, m1, m2) =>
+  text = text.replace /(?:^|\n)```[ \t]*(\S*)[ \t]*\n([\s\S]*?\n)```[ \t]*(?=\n)/g, (match, m1, m2) =>
     language = m1
     codeblock = m2;
 
