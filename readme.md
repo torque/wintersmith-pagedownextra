@@ -21,9 +21,12 @@ wide, add something like the following to your `config.json`:
 
 ```json
 "pagedownextra": {
-	"extensions": ["fenced_code_gfm", "tables", "def_list", "attr_list", "footnotes", "smartypants", "strikethrough"]
+	"extensions": ["fenced_code_gfm", "tables", "def_list", "attr_list", "footnotes", "smartypants", "strikethrough"],
+	"addLineNumbers": true
 }
 ```
+
+The `addLineNumbers` option will add line numbers to code blocks with a specified language syntax. However, they require separate CSS to be displayed properly, and thus the feature is disabled by default.
 
 The extensions can also be overridden on a per-article basis by using
 something like the following in your article's front matter:

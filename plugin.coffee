@@ -6,6 +6,8 @@ fs = require 'fs'
 path = require 'path'
 url = require 'url'
 
+# I find it difficult to forgive myself for this.
+addLineNumbers = false
 # monkey patch in highlighting for fenced code blocks
 pagedownExtra.prototype.fencedCodeBlocks = (text) ->
   encodeCode = (code) ->
@@ -20,6 +22,7 @@ pagedownExtra.prototype.fencedCodeBlocks = (text) ->
     # adhere to specified options
     preclass = ''
     codeclass = ''
+    lineNumbers = ''
 
     code = encodeCode codeblock
     if language and hljs.getLanguage language
@@ -27,7 +30,13 @@ pagedownExtra.prototype.fencedCodeBlocks = (text) ->
       codeclass = ' class="language-' + language + '"'
       code = hljs.highlight(language, code).value
 
-    html = ['<pre', preclass, '><code', codeclass, '>', code, '</code></pre>'].join('');
+      if addLineNumbers
+        lines = []
+        for lineNumber in [1...code.split(/\n/).length] by 1
+          lines.push lineNumber
+        lineNumbers = ['<span class="line-number"><span>',lines.join('</span>\n<span>'),'</span></span>'].join('')
+
+    html = ['<pre', preclass, '>',lineNumbers,'<code', codeclass, '>', code, '</code></pre>'].join('');
 
     # replace codeblock with placeholder until postConversion step
     @hashExtraBlock html
@@ -143,6 +152,7 @@ u = /(\$\$?|\\(?:begin|end)\{[a-z]*\*?\}|\\[\\{}$]|[{}]|(?:\n\s*)+|@@\d+@@)/i
 pagedownRender = ( page, globalOptions, callback ) ->
   # convert the page
   extensions = page.metadata.pagedownextraExtensions or globalOptions and globalOptions.extensions or "all"
+  addLineNumbers = globalOptions and globalOptions.addLineNumbers
   converter = new pagedown.Converter( )
   pagedownExtra.init converter, {extensions: extensions}
 
