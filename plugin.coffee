@@ -147,7 +147,7 @@ d = (a) ->
   m = null
   a
 
-u = /(\$\$?|\\(?:begin|end)\{[a-z]*\*?\}|\\[\\{}$]|[{}]|(?:\n\s*)+|@@\d+@@)/i
+u = /(\$\$|\\(?:begin|end)\{[a-z]*\*?\}|\\[\\{}$]|[{}]|(?:\n\s*)+|@@\d+@@)/i
 
 pagedownRender = ( page, globalOptions, callback ) ->
   # convert the page
