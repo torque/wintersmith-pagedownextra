@@ -153,6 +153,8 @@ pagedownRender = ( page, globalOptions, callback ) ->
   # convert the page
   extensions = page.metadata.pagedownextraExtensions or globalOptions and globalOptions.extensions or "all"
   addLineNumbers = globalOptions and globalOptions.addLineNumbers
+  if globalOptions?.hljsClassPrefix?
+    hljs.configure classPrefix: globalOptions.hljsClassPrefix
   converter = new pagedown.Converter( )
   pagedownExtra.init converter, {extensions: extensions}
 
